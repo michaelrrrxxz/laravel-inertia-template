@@ -6,7 +6,18 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Foundation\Application;
+use Inertia\Inertia;
+Route::get('/', function () {
 
+    // sample comment
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
 Route::group(['middleware' => ['sleep','auth','preventBackHistory']], function () {
         Route::resource('users',UserController::class);
